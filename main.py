@@ -1,3 +1,4 @@
+from importlib.metadata import files
 from pickletools import read_decimalnl_long
 import numpy as np
 import pandas as pd
@@ -10,24 +11,32 @@ s = pd.Series([1, 3, 5, np.nan, 6, 8])
 print(s)
 
 class Reader(threading.Thread):
-    """ This is a dealer that receives cars """
 
-    def __init__(self):
+    def __init__(self, files):
         super().__init__()
+        self.files = files
 
     def run(self):
-        for i in range(len(os.listdir('./dataset'))):
-            pd.read_csv()
+        
+
+        for name in os.listdir('./dataset'):
+            path = './dataset/' + name
+            files[name] = pd.read_csv(path)
         pass
 
 def main():
-    reader = Reader()
+    files = {}
 
-    print(len(os.listdir('./dataset')))
+    reader = Reader(files)
+
+    print(os.listdir('./dataset'))
+
+
 
     reader.start()
     reader.join()
 
+    print(len(files))
 
 
 if __name__ == '__main__':
